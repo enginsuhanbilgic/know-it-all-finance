@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Home Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Get stock and company information fast and free">
+        <meta name="date" content="">
+        <style>
+
+            body, h1, h2, p, ul, li {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                line-height: 1.6;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            header {
+                background-color: #333;
+                color: #fff;
+                padding: 20px;
+            }
+
+            header h1 {
+                margin: 0;
+                text-align: center;
+            }
+
+            nav ul {
+                list-style-type: none;
+            }
+
+            nav ul li {
+                display: inline;
+                margin-right: 10px;
+            }
+
+            nav ul li a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            main {
+                flex: 1; /* Take up remaining vertical space */
+                padding-top: 10px;
+            }
+
+            #mainStockInfo {
+                background-color: #e0e0e0;
+                padding: 20px;
+                text-align: center;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            #mainStockInfo h2 {
+                margin-bottom: 20px;
+            }
+
+            #mainStockInfo ul{
+                width: 100%;
+                display: inline-block;
+                animation: slide 15s linear infinite;
+            }
+
+            #mainStockInfo ul li{
+                width: 20%;
+                display: inline-block;
+                text-align: center;
+            }
+
+            @keyframes slide {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-100%);
+                }
+				//https://www.youtube.com/watch?v=2l99ERCnB9c
+            }
+
+            footer{
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+                margin-top: auto;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Welcome to free superduperamazingfinanceinfo</h1>
+            <nav>
+                <ul>
+                    <li><a href="./mainpage">Home</a></li>
+                    <li><a href="./search">Search</a></li>
+                    <li><a href="#">Profile</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="mainStockInfo">
+                <h2>Stocks of the day</h2>
+                <ul id="stockList">
+                    <li>Bitcoin(BTC) 70.000$</li>
+                    <li>Ethereum(ETH) 3.500$</li>
+                    <li>Binance Coin(BNB) 570$</li>
+                    <li>Solana(SOL) 180$</li>
+                    <li>Avalanche(AVAX) 55$</li>
+                    <li>Bitcoin(BTC) 70.000$</li>
+                    <li>Ethereum(ETH) 3.500$</li>
+                    <li>Binance Coin(BNB) 570$</li>
+                    <li>Solana(SOL) 180$</li>
+                    <li>Avalanche(AVAX) 55$</li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; superduperamazingfinanceinfo. All rights reserved</p>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var currentDate = new Date().toISOString().slice(0, 10);
+                var metaTag = document.querySelector('meta[name="date"]');
+                metaTag.setAttribute("content", currentDate);
+            })
+        </script>
+    </body>
+</html>
