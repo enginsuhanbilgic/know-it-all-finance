@@ -1,10 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Search page</title>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search companies, stocks, currencies and more..">
+    <meta name="date" content="">
+    <style>
 
+        body, h1, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            flex: 1; /* Take up remaining vertical space */
+            padding-top: 10px;
+        }
+
+        footer{
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to free superduperamazingfinanceinfo</h1>
+        <nav>
+            <ul>
+                <li><a href="./mainpage">Home</a></li>
+                <li><a href="./search">Search</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form id="searchForm" action="/pushsearch" method="post">
+            <input type="text" id="searchInput" name="searchQuery" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+        <!--
+        <div th:if="${not #lists.isEmpty(cryptoCurrencies)}">
+            <ul>
+                <li th:each="currency : ${cryptoCurrencies}">
+                    <span th:text="${currency.name}"></span> - <span th:text="${currency.symbol}"></span>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${#lists.isEmpty(cryptoCurrencies)}">
+            No results found.
+        </div>
+        -->
+    </main>
+
+    <footer>
+        <p>&copy; superduperamazingfinanceinfo. All rights reserved</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentDate = new Date().toISOString().slice(0, 10);
+            var metaTag = document.querySelector('meta[name="date"]');
+            metaTag.setAttribute("content", currentDate);
+        })
+    </script>
 </body>
 </html>
