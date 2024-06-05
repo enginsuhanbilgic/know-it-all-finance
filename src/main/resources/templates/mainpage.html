@@ -7,7 +7,13 @@
         <meta name="description" content="Get stock and company information fast and free">
         <meta name="date" content="">
         <style>
-
+            body{
+                background-color: white;
+            }
+            body *{
+                width: 1200px;
+                margin: 0 auto;
+            }
             body, h1, h2, p, ul, li {
                 margin: 0;
                 padding: 0;
@@ -47,50 +53,101 @@
             }
 
             main {
-                flex: 1; /* Take up remaining vertical space */
+                display: flex;
+                width: 1240px;
                 padding-top: 10px;
+                padding-bottom: 10px;
+                margin: 0 auto;
+                flex: 0.95; /* Take up remaining vertical space */
             }
 
-            #mainStockInfo {
-                background-color: #e0e0e0;
+            .mainStockInfo {
+                position: relative;
+                background-color: rgb(253, 217, 186);
                 padding: 20px;
                 text-align: center;
                 overflow: hidden;
                 white-space: nowrap;
+                -webkit-mask-image: linear-gradient(90deg, transparent, whitesmoke 20%, whitesmoke 80%, transparent);
             }
 
-            #mainStockInfo h2 {
+            .mainStockInfo ul{
+                width: 100%;
+                display: inline-flex;
+                white-space: nowrap;
+                padding-right: 250px;
+                animation: animate2 var(--t) linear infinite;
+                animation-delay: calc(var(--t) * -1);
+            }
+
+            .mainStockInfo ul:nth-child(2){
+                animation: animate var(--t) linear infinite;
+                animation-delay: calc(var(--t) / -2);
+            }
+
+            @keyframes animate
+            {
+                0%
+                {
+                    transform: translateX(100%);
+                }
+                100%{
+                    transform: translateX(-100%);
+                }
+            }
+
+            @keyframes animate2
+            {
+                0%
+                {
+                    transform: translateX(0%);
+                }
+                100%{
+                    transform: translateX(-200%);
+                }
+            }
+
+            .mainStockInfo h2 {
                 margin-bottom: 20px;
             }
 
-            #mainStockInfo ul{
+            .mainStockInfo ul li{
+                letter-spacing: 0.05em;
                 width: 100%;
-                display: inline-block;
-                animation: slide 15s linear infinite;
-            }
-
-            #mainStockInfo ul li{
-                width: 20%;
-                display: inline-block;
+                display: inline-flex;
+                margin: 10px;
+                margin-inline: 50px;
+                padding: 5px 10px;
+                border-radius: 10px;
+                background: rgb(253, 230, 215);
                 text-align: center;
             }
 
-            @keyframes slide {
-                0% {
-                    transform: translateX(0);
-                }
-                100% {
-                    transform: translateX(-100%);
-                }
-				//https://www.youtube.com/watch?v=2l99ERCnB9c
+            .mainStockInfo ul li:hover{
+                background: #92b893;
+                cursor: pointer;
             }
 
-            footer{
+            footer{ 
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1240px;
                 background-color: #333;
                 color: #fff;
                 padding: 10px;
-                text-align: center;
                 margin-top: auto;
+            }
+
+            p[name="copyright"]{
+                text-align: right;
+                flex-grow: 1;
+            }
+
+            p[name="footerDate"]{
+                text-align: right;
+                margin: 0;
+                padding: 0;
             }
 
         </style>
@@ -107,14 +164,16 @@
             </nav>
         </header>
         <main>
-            <section id="mainStockInfo">
+            <section class="mainStockInfo" style="--t:20s">
                 <h2>Stocks of the day</h2>
-                <ul id="stockList">
+                <ul>
                     <li>Bitcoin(BTC) 70.000$</li>
                     <li>Ethereum(ETH) 3.500$</li>
                     <li>Binance Coin(BNB) 570$</li>
                     <li>Solana(SOL) 180$</li>
                     <li>Avalanche(AVAX) 55$</li>
+                </ul>
+                <ul>
                     <li>Bitcoin(BTC) 70.000$</li>
                     <li>Ethereum(ETH) 3.500$</li>
                     <li>Binance Coin(BNB) 570$</li>
@@ -124,7 +183,8 @@
             </section>
         </main>
         <footer>
-            <p>&copy; superduperamazingfinanceinfo. All rights reserved</p>
+            <p name="copyright">&copy; superduperamazingfinanceinfo. All rights reserved</p>
+            <p name="footerDate"></p>
         </footer>
 
         <script>
@@ -132,6 +192,7 @@
                 var currentDate = new Date().toISOString().slice(0, 10);
                 var metaTag = document.querySelector('meta[name="date"]');
                 metaTag.setAttribute("content", currentDate);
+                document.querySelector('p[name="footerDate"]').textContent = currentDate;
             })
         </script>
     </body>
