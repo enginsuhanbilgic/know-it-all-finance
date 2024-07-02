@@ -1,16 +1,20 @@
 package com.knowitall.myFmp.controller;
 
-import com.knowitall.myFmp.model.CryptoCurrency;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.knowitall.myFmp.service.SearchService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Controller
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+@RequestMapping("/api")
 public class SearchController {
 
     private final SearchService searchService;
@@ -19,21 +23,14 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    @RequestMapping("/search")
-    public String searchPage(){
-        return "search";
+    @GetMapping("/search")
+    public Mono<JsonNode> getCryptoInfo(@RequestParam(value = "searchText", required = true) String searchText){
+        return searchService.searchCryptoCurrencies(searchText.trim());
     }
-    /*
-    @PostMapping("/pushsearch")
-    public String getSearch(@RequestParam("searchQuery") String searchQuery, Model model){
-        List<CryptoCurrency> cryptoCurrencies = searchService.searchCryptoCurrencies(searchQuery);
-        model.addAttribute("cryptoCurrencies", cryptoCurrencies);
-        return "search";
+
+    @GetMapping("/searchlist")
+    public Mono<JsonNode> getAllMatchingCrypto(@RequestParam(value = "searchText", required = true) String searchText){
+        return searchService.getAllMatching(searchText.trim());
     }
-*/
-    @PostMapping("/pushsearch")
-    public String getSearch(@RequestParam("searchQuery") String searchQuery){
-        System.out.println(searchQuery);
-        return searchQuery;
-    }
+
 }

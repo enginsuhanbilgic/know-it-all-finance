@@ -1,199 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Home Page</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Get stock and company information fast and free">
-        <meta name="date" content="">
-        <style>
-            body{
-                background-color: white;
-            }
-            body *{
-                width: 1200px;
-                margin: 0 auto;
-            }
-            body, h1, h2, p, ul, li {
-                margin: 0;
-                padding: 0;
-            }
+<head>
+    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get stock and company information fast and free">
+    <meta name="date" content="">
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <style>
+        :root {
+            --padding: 20px;
+            --primary-color: #3498db;
+            --secondary-color: #f3f3f3;
+            --highlight-color: #92b893;
+            --animation-duration: 20s;
+            --item-margin: 40px;
+        }
 
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-                line-height: 1.6;
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
+        * {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.4px;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-            header {
-                background-color: #333;
-                color: #fff;
-                padding: 20px;
-            }
+        body {
+            background-color: white;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
 
-            header h1 {
-                margin: 0;
-                text-align: center;
-            }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            color: #fff;
+            padding: var(--padding);
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
 
-            nav ul {
-                list-style-type: none;
-            }
+        header h1 {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 52px;
+            text-shadow: 2px 2px #000;
+        }
 
-            nav ul li {
-                display: inline;
-                margin-right: 10px;
-            }
+        .buttons {
+            display: flex;
+            align-items: center;
+        }
 
-            nav ul li a {
-                color: #fff;
-                text-decoration: none;
-            }
+        nav ul {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
 
-            main {
-                display: flex;
-                width: 1240px;
-                padding-top: 10px;
-                padding-bottom: 10px;
-                margin: 0 auto;
-                flex: 0.95; /* Take up remaining vertical space */
-            }
+        nav ul li {
+            margin-right: 15px;
+            transition: transform 0.2s;
+        }
 
-            .mainStockInfo {
-                position: relative;
-                background-color: rgb(253, 217, 186);
-                padding: 20px;
-                text-align: center;
-                overflow: hidden;
-                white-space: nowrap;
-                -webkit-mask-image: linear-gradient(90deg, transparent, whitesmoke 20%, whitesmoke 80%, transparent);
-            }
+        nav ul li:hover {
+            transform: scale(1.1);
+        }
 
-            .mainStockInfo ul{
-                width: 100%;
-                display: inline-flex;
-                white-space: nowrap;
-                padding-right: 250px;
-                animation: animate2 var(--t) linear infinite;
-                animation-delay: calc(var(--t) * -1);
-            }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 17px;
+            transition: color 0.3s;
+        }
 
-            .mainStockInfo ul:nth-child(2){
-                animation: animate var(--t) linear infinite;
-                animation-delay: calc(var(--t) / -2);
-            }
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
 
-            @keyframes animate
-            {
-                0%
-                {
-                    transform: translateX(100%);
-                }
-                100%{
-                    transform: translateX(-100%);
-                }
-            }
+        form {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
 
-            @keyframes animate2
-            {
-                0%
-                {
-                    transform: translateX(0%);
-                }
-                100%{
-                    transform: translateX(-200%);
-                }
-            }
+        input[type="text"] {
+            width: 120px;
+            font-size: 14px;
+            padding: 2px;
+            margin-right: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
 
-            .mainStockInfo h2 {
-                margin-bottom: 20px;
-            }
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
 
-            .mainStockInfo ul li{
-                letter-spacing: 0.05em;
-                width: 100%;
-                display: inline-flex;
-                margin: 10px;
-                margin-inline: 50px;
-                padding: 5px 10px;
-                border-radius: 10px;
-                background: rgb(253, 230, 215);
-                text-align: center;
-            }
+        button {
+            font-size: 12px;
+            padding: 2px 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-            .mainStockInfo ul li:hover{
-                background: #92b893;
-                cursor: pointer;
-            }
+        button:hover {
+            background-color: #2980b9;
+        }
 
-            footer{ 
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                max-width: 1240px;
-                background-color: #333;
-                color: #fff;
-                padding: 10px;
-                margin-top: auto;
-            }
+        main {
+            display: flex;
+            width: calc(1300px - 2*var(--padding));
+            padding-top: 70px;
+            margin: 0 auto;
+            flex: 0.95; /* Take up remaining vertical space */
+        }
 
-            p[name="copyright"]{
-                text-align: right;
-                flex-grow: 1;
-            }
+        .mainStockInfo {
+            position: relative;
+            width: calc(1300px - 2*var(--padding));
+            background-color: rgb(253, 217, 186);
+            padding: 20px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-            p[name="footerDate"]{
-                text-align: right;
-                margin: 0;
-                padding: 0;
-            }
+        .mainStockInfo ul {
+            display: inline-flex;
+            list-style-type: none; /* Remove default list markers */
+            padding: 20px; /* Add space before and after list */
+            gap: var(--item-margin);
+            animation: slide2 var(--animation-duration) linear infinite;
+            animation-delay: calc(var(--animation-duration)*-1);
+        }
 
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1>Welcome to free superduperamazingfinanceinfo</h1>
+        .mainStockInfo ul:nth-child(1) {
+            animation: slide1 var(--animation-duration) linear infinite;
+            animation-delay: calc(var(--animation-duration)/-2);
+        }
+
+        @keyframes slide1 {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes slide2 {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-200%);
+            }
+        }
+
+        .mainStockInfo h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .mainStockInfo ul li {
+            letter-spacing: 0.05em;
+            margin: 0 20px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background: rgb(253, 230, 215);
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .mainStockInfo ul li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background: rgb(253, 230, 215);
+            transition: background 0.3s;
+        }
+
+        .mainStockInfo ul li a:hover {
+            background: var(--highlight-color);
+        }
+
+        footer {
+            align-self: center;
+            padding: var(--padding);
+            width: calc(1300px - 2*var(--padding));
+            background-color: #333;
+            color: #fff;
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        footer .copyright {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+        }
+
+        p[name="footerDate"] {
+            position: absolute;
+            right: 20px;
+            margin: 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .spacer {
+            height: 10px;
+            background-color: white;
+        }
+
+        #loader {
+            border: 16px solid var(--secondary-color); /* Light grey */
+            border-top: 16px solid var(--primary-color); /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            animation: spin 2s infinite ease-in-out;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(1080deg); }
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to free superduperamazingfinanceinfo</h1>
+        <div class="buttons">
             <nav>
                 <ul>
                     <li><a href="./mainpage">Home</a></li>
-                    <li><a href="./search">Search</a></li>
                     <li><a href="#">Profile</a></li>
                 </ul>
             </nav>
-        </header>
-        <main>
-            <section class="mainStockInfo" style="--t:20s">
-                <h2>Stocks of the day</h2>
-                <ul>
-                    <li>Bitcoin(BTC) 70.000$</li>
-                    <li>Ethereum(ETH) 3.500$</li>
-                    <li>Binance Coin(BNB) 570$</li>
-                    <li>Solana(SOL) 180$</li>
-                    <li>Avalanche(AVAX) 55$</li>
-                </ul>
-                <ul>
-                    <li>Bitcoin(BTC) 70.000$</li>
-                    <li>Ethereum(ETH) 3.500$</li>
-                    <li>Binance Coin(BNB) 570$</li>
-                    <li>Solana(SOL) 180$</li>
-                    <li>Avalanche(AVAX) 55$</li>
-                </ul>
-            </section>
-        </main>
-        <footer>
-            <p name="copyright">&copy; superduperamazingfinanceinfo. All rights reserved</p>
-            <p name="footerDate"></p>
-        </footer>
+            <form id="mainSearchForm" onsubmit="redirectToSearch(event)">
+                <input type="text" name="searchText" id="searchText" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var currentDate = new Date().toISOString().slice(0, 10);
-                var metaTag = document.querySelector('meta[name="date"]');
-                metaTag.setAttribute("content", currentDate);
-                document.querySelector('p[name="footerDate"]').textContent = currentDate;
-            })
-        </script>
-    </body>
+    <div class="spacer"></div>
+
+    <main>
+        <section class="mainStockInfo" id="mainStockInfo" style="--t:20s">
+            <h2>Stocks of the day</h2>        
+            <div id="loader"></div>    
+            <!--        
+                Slide will be here
+            -->
+        </section>
+    </main>
+    <footer>
+        <p class="copyright">© superduperamazingfinanceinfo. All rights reserved</p>
+        <p name="footerDate"></p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentDate = new Date().toISOString().slice(0, 10);
+            var metaTag = document.querySelector('meta[name="date"]');
+            metaTag.setAttribute("content", currentDate);
+            document.querySelector('p[name="footerDate"]').textContent = currentDate;
+
+            performSearch();
+        });
+
+        async function performSearch() {
+            await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds delay
+            try {   
+
+                const slideDiv = document.getElementById('mainStockInfo');
+
+                const BTC = await fetch(`/api/search?searchText=${encodeURIComponent("BTCUSD")}`);
+                const dataBTC = await BTC.json();
+                const ETH = await fetch(`/api/search?searchText=${encodeURIComponent("ETHUSD")}`);
+                const dataETH = await ETH.json();
+                const BNB = await fetch(`/api/search?searchText=${encodeURIComponent("BNBUSD")}`);
+                const dataBNB = await BNB.json();
+                const SOL = await fetch(`/api/search?searchText=${encodeURIComponent("SOLUSD")}`);
+                const dataSOL = await SOL.json();
+                const AVAX = await fetch(`/api/search?searchText=${encodeURIComponent("AVAXUSD")}`);
+                const dataAVAX = await AVAX.json();
+                
+                const getLatestPrice = (historicalData) => {
+                    const latestData = historicalData[historicalData.length - 1];
+                    return latestData.open.toFixed(2);
+                };
+
+                const resultItem = document.createElement('div');
+                resultItem.id = 'list';
+                resultItem.innerHTML = `
+                    <ul>
+                        <li><a href="./search?searchText=BTCUSD">Bitcoin(BTC) ${getLatestPrice(dataBTC.historical)}$</a></li>
+                        <li><a href="./search?searchText=ETHUSD">Ethereum(ETH) ${getLatestPrice(dataETH.historical)}$</a></li>
+                        <li><a href="./search?searchText=BNBUSD">Binance Coin(BNB) ${getLatestPrice(dataBNB.historical)}$</a></li>
+                        <li><a href="./search?searchText=SOLUSD">Solana(SOL) ${getLatestPrice(dataSOL.historical)}$</a></li>
+                        <li><a href="./search?searchText=AVAXUSD">Avalanche(AVAX) ${getLatestPrice(dataAVAX.historical)}$</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="./search?searchText=BTCUSD">Bitcoin(BTC) ${getLatestPrice(dataBTC.historical)}$</a></li>
+                        <li><a href="./search?searchText=ETHUSD">Ethereum(ETH) ${getLatestPrice(dataETH.historical)}$</a></li>
+                        <li><a href="./search?searchText=BNBUSD">Binance Coin(BNB) ${getLatestPrice(dataBNB.historical)}$</a></li>
+                        <li><a href="./search?searchText=SOLUSD">Solana(SOL) ${getLatestPrice(dataSOL.historical)}$</a></li>
+                        <li><a href="./search?searchText=AVAXUSD">Avalanche(AVAX) ${getLatestPrice(dataAVAX.historical)}$</a></li>
+                    </ul>
+                `;
+                const loaderElement = document.getElementById('loader');
+                loaderElement.remove();
+                slideDiv.appendChild(resultItem);
+            } catch (error) {
+                console.error('Error:', error);
+                displayResults({ message: "An error occurred while processing your request" });
+            }
+        }
+
+        function redirectToSearch(event) {
+            event.preventDefault();
+            const searchText = document.getElementById('searchText').value;
+            if (searchText.trim() === "") {
+                alert("Please enter a search term");
+                return;
+            }
+            window.location.href = `/search?searchText=${encodeURIComponent(searchText)}`;
+        }
+    </script>
+</body>
 </html>
