@@ -271,11 +271,10 @@
             const searchText = document.getElementById('searchText').value;
             if (!validateSearch()) return;
 
-            window.location.href = `/search?searchText=${encodeURIComponent(searchText)}`;
+            window.location.href = `/searchlist?searchText=${encodeURIComponent(searchText)}`;
         }
 
         async function performSearch(searchText) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds delay
             try {
                 const response = await fetch(`/api/search?searchText=${encodeURIComponent(searchText)}`);
                 const data = await response.json();

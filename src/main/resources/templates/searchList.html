@@ -109,7 +109,7 @@
             outline: none;
         }
 
-        button {
+        #searchForm button {
             font-size: 12px;
             padding: 2px 5px;
             border: none;
@@ -120,7 +120,7 @@
             transition: background-color 0.3s;
         }
 
-        button:hover {
+        #searchForm button:hover {
             background-color: #2980b9;
         }
 
@@ -142,11 +142,40 @@
             white-space: nowrap;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flexbox;
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: center; /* Center the buttons */
         }
 
         .mainStockInfo h2 {
             margin-bottom: 20px;
             color: #333;
+        }
+
+        .buttonContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px; /* Space between containers */
+        }
+
+        .result-button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px; /* Adjust padding for button size */
+            background-color: rgb(253, 230, 215);
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px; /* Rounded corners */
+            max-width: 100px; /* Ensure buttons do not grow too large */
+            flex: 1 1 auto; /* Flex item, allow to shrink and grow */
+            text-align: center;
+            box-sizing: border-box; /* Ensure padding is included in width */
+        }
+
+        .result-button:hover {
+            background-color: #0096b3;
         }
 
         footer {
@@ -191,10 +220,6 @@
             box-sizing: border-box;
         }
 
-        .mainStockInfo ul{
-            list-style-type: none; 
-        }
-
         #loader {
             border: 16px solid var(--secondary-color); /* Light grey */
             border-top: 16px solid var(--primary-color); /* Blue */
@@ -232,8 +257,7 @@
     <div class="spacer"></div>
 
     <main>
-        <section class="mainStockInfo" id="mainStockInfo">
-            <h2>Stock information</h2>        
+        <section class="mainStockInfo" id="mainStockInfo">       
             <div id="loader"></div>    
         </section>
     </main>
@@ -257,6 +281,17 @@
             }
         });
 
+        async function performSearch(searchText) {
+            try {
+                const response = await fetch(`/api/searchlist?searchText=${encodeURIComponent(searchText)}`);
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                console.error('Error:', error);
+                displayResults({ message: "An error occurred while processing your request" });
+            }
+        }
+
         function validateSearch() {
             var searchText = document.getElementById('searchText').value;
             if(searchText.trim() === ""){
@@ -271,19 +306,7 @@
             const searchText = document.getElementById('searchText').value;
             if (!validateSearch()) return;
 
-            window.location.href = `/search?searchText=${encodeURIComponent(searchText)}`;
-        }
-
-        async function performSearch(searchText) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds delay
-            try {
-                const response = await fetch(`/api/search?searchText=${encodeURIComponent(searchText)}`);
-                const data = await response.json();
-                displayResults(data);
-            } catch (error) {
-                console.error('Error:', error);
-                displayResults({ message: "An error occurred while processing your request" });
-            }
+            window.location.href = `/searchlist?searchText=${encodeURIComponent(searchText)}`;
         }
 
         function displayResults(data) {
@@ -294,27 +317,38 @@
                 return;
             }
 
+            const header = document.createElement('h2');
+            header.innerHTML = 'Search results';
+            resultsDiv.appendChild(header);
+
             const resultItem = document.createElement('div');
-            resultItem.innerHTML = `
-                <h2>${data.symbol} (${data.name})</h2>
-                <p>Currency: ${data.currency}</p>
-                <p>Stock Exchange: ${data.stockExchange} (${data.exchangeShortName})</p>
-                <h3>Historical Data</h3>
-                <ul>
-                    ${data.historical.map(hist => `
-                        <li>${hist.date}</li> 
-                        <li>Open ${hist.open}</li>
-                        <li>Close ${hist.close}</li> 
-                        <li>High ${hist.high}</li> 
-                        <li>Low ${hist.low}</li> 
-                        <li>Volume ${hist.volume}</li>
-                    `).join('')}
-                </ul>
-            `;
+
             const loaderItem = document.getElementById('loader');
-            loaderItem.remove();
-            resultsDiv.appendChild(resultItem);
+            if (loaderItem) {
+                loaderItem.remove();
+            }
+        
+            const buttonsPerContainer = 10;
+            for (let i = 0; i < data.length; i += buttonsPerContainer) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'buttonContainer';
+                
+                // Add buttons to the container
+                for (let j = i; j < i + buttonsPerContainer && j < data.length; j++) {
+                    const button = document.createElement('button');
+                    button.innerHTML = data[j];
+                    button.className = 'result-button';
+                    button.addEventListener('click', () => {
+                        window.location.href = `/search?searchText=${encodeURIComponent(data[j])}`;
+                    });
+                    buttonContainer.appendChild(button);
+                }
+
+                resultsDiv.appendChild(buttonContainer);
+            }
+
         }
+
 
     </script>
 </body>

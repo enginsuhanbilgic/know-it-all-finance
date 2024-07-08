@@ -51,10 +51,6 @@ public class SearchService {
 
     public Mono<JsonNode> getAllMatching(String searchText) {
 
-        if(searchText.length()<3){
-            return Mono.just(objectMapper.createObjectNode().put("message", "Enter minimum of 3 letters."));
-        }
-
         Query query = new Query();
         query.addCriteria(new Criteria().orOperator(
             Criteria.where("symbol").regex(".*"+Pattern.quote(searchText)+".*", "i"),
@@ -145,7 +141,6 @@ public class SearchService {
                     }
                 });
     }
-
 
     private Mono<JsonNode> getCurrentDayCryptoPrice(String symbol) {
         String currentDateString = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

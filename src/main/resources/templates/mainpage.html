@@ -186,7 +186,6 @@
         .mainStockInfo ul li {
             letter-spacing: 0.05em;
             margin: 0 20px;
-            padding: 5px 10px;
             border-radius: 10px;
             background: rgb(253, 230, 215);
             text-align: center;
@@ -199,7 +198,7 @@
             height: 100%;
             color: #000;
             text-decoration: none;
-            padding: 5px 10px;
+            padding: 10px 20px;
             border-radius: 10px;
             background: rgb(253, 230, 215);
             transition: background 0.3s;
@@ -306,7 +305,6 @@
         });
 
         async function performSearch() {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds delay
             try {   
 
                 const slideDiv = document.getElementById('mainStockInfo');

@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class FrontendController {
     
+    @GetMapping("/")
+    public String homePage(){
+        return "mainpage";
+    }
+    
     @GetMapping("/search")
     public String searchPage(){
         return "search";
     }
 
-    @GetMapping("/")
-    public String homePage(){
-        return "mainpage";
-    }
-
     @GetMapping("/searchlist")
     public String searchAllPage(){
-        return "searchList";
+        return "searchlist";
     }
 
 }
